@@ -5,7 +5,6 @@
  */
 package com.app.clinicaescola.entity;
 
-import java.util.Collection;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,14 +18,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Employee extends Person {
     
     @DBRef
-    private Collection<Kind> kinds;
+    private Kind kind;
 
-    public Collection<Kind> getKinds() {
-        return kinds;
+    public Kind getKind() {
+        return kind;
     }
 
-    public void setKinds(Collection<Kind> kinds) {
-        this.kinds = kinds;
+    public void setKind(Kind kind) {
+        this.kind = kind;
     }
     
 }

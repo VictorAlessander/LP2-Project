@@ -12,4 +12,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  *
  * @author vagr
  */
-public interface EmployeeRepository extends MongoRepository<Employee, String> {}
+public interface EmployeeRepository extends MongoRepository<Employee, String> {
+    public Employee findByFirstName(String firstName);
+    
+    // public void makeAppointment(Employee employee, )
+}

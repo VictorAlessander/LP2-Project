@@ -19,7 +19,8 @@ public class Person {
     @Id
     private String id;
     
-    private String name;
+    private String firstName;
+    private String lastName;
     private int age;
 
     public String getId() {
@@ -30,12 +31,20 @@ public class Person {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getAge() {

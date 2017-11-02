@@ -6,6 +6,7 @@
 package com.app.clinicaescola.entity;
 
 import javax.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -18,8 +19,37 @@ public class Appointment {
     
     @Id
     private String id;
-    
+
     private String medical_specialty;
+    private boolean attended;
+    private String date;
+    
+    @DBRef
+    private Patient patient;
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public boolean isAttended() {
+        return attended;
+    }
+
+    public void setAttended(boolean attended) {
+        this.attended = attended;
+    }
 
     public String getId() {
         return id;

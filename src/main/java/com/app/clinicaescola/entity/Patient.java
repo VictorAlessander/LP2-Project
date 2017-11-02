@@ -5,8 +5,6 @@
  */
 package com.app.clinicaescola.entity;
 
-import java.util.Collection;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -17,16 +15,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 // @Document(collection = "person")
 @Document
 public class Patient extends Person {
-    
-    @DBRef
-    private Collection<Appointment> appointments;
-
-    public Collection<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(Collection<Appointment> appointments) {
-        this.appointments = appointments;
-    }
     
 }

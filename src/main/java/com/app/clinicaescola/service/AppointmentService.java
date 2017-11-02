@@ -24,7 +24,7 @@ public class AppointmentService {
     
     public List<Appointment> listAppointments() {
         return appointment.findAll();
-    }
+}
     
     public List<Appointment> createAppointment(Appointment newAppointment) {
         appointment.save(newAppointment);

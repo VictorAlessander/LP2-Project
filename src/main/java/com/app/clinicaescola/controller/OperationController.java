@@ -6,9 +6,10 @@
 package com.app.clinicaescola.controller;
 
 import com.app.clinicaescola.entity.Appointment;
-import com.app.clinicaescola.service.AppointmentService;
+import com.app.clinicaescola.service.OperationService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,19 +21,25 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class AppointmentController {
+public class OperationController {
     
     @Autowired
-    AppointmentService appointment;
+    OperationService operation;
     
-    @RequestMapping(value = "/appointments", method = RequestMethod.GET)
+    @Autowired
+    
+    
+    @RequestMapping(value = "/operation/appointments", method = RequestMethod.GET)
     public List<Appointment> list() {
-        return this.appointment.listAppointments();
+        return this.operation.listAppointments();
     }
     
-    @RequestMapping(value = "/appointments", method = RequestMethod.POST)
-    public List<Appointment> create(@RequestBody Appointment newAppointment) {
-        return this.appointment.createAppointment(newAppointment);
+    @RequestMapping(value = "/operation/appointments/{firstname}", method = RequestMethod.POST)
+    public List<Appointment> createAppointment(
+            @RequestBody Appointment newAppointment,
+            @PathVariable("firstname") String employeeFirstName) {
+        
+        return this.operation.newAppointment(newAppointment, employeeFirstName);
     }
 
 }
