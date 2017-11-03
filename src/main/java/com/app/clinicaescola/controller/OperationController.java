@@ -26,12 +26,14 @@ public class OperationController {
     @Autowired
     OperationService operation;
     
-    @Autowired
-    
-    
     @RequestMapping(value = "/operation/appointments", method = RequestMethod.GET)
     public List<Appointment> list() {
-        return this.operation.listAppointments();
+        return this.operation.listAllAppointments();
+    }    
+    
+    @RequestMapping(value = "/operation/appointments/{status}", method = RequestMethod.GET)
+    public List<Appointment> listSelected(@PathVariable("status") boolean attended) {
+        return this.operation.listAppointments(attended);
     }
     
     @RequestMapping(value = "/operation/appointments/{firstname}", method = RequestMethod.POST)

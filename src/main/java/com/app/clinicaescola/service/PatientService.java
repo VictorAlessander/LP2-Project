@@ -5,7 +5,9 @@
  */
 package com.app.clinicaescola.service;
 
+import com.app.clinicaescola.entity.Employee;
 import com.app.clinicaescola.entity.Patient;
+import com.app.clinicaescola.repository.EmployeeRepository;
 import com.app.clinicaescola.repository.PatientRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +22,25 @@ import org.springframework.stereotype.Service;
 public class PatientService {
     
     @Autowired
-    PatientRepository patient;
+    PatientRepository patientRepo;
+    
+    @Autowired
+    EmployeeRepository employeeRepo;
     
     public List<Patient> listPatients() {
-        return patient.findAll();
+        return patientRepo.findAll();
     }
     
-    public List<Patient> createPatient(Patient newPatient) {
-        patient.save(newPatient);
+    public List<Patient> createPatient(Patient newPatient, String employeeFirstName) {
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
         
-        return patient.findAll();
+        if("clinic".equals(employee.getKind().getName())) {
+            patientRepo.save(newPatient);
+            return patientRepo.findAll();
+        }
+        else{
+            return null;
+        }
     }
     
 }

@@ -26,9 +26,6 @@ public class OperationService {
     EmployeeRepository employeeRepo;
     
     @Autowired
-    PatientRepository patientRepo;
-    
-    @Autowired
     AppointmentRepository appointmentRepo;
     
    public List<Appointment> newAppointment(Appointment appointment, String employeeFirstName) {
@@ -43,7 +40,12 @@ public class OperationService {
        }
    }
         
-    public List<Appointment> listAppointments() {
+    public List<Appointment> listAppointments(boolean attended) {
+        return appointmentRepo.findByAttended(attended);
+    }
+    
+    public List<Appointment> listAllAppointments() {
         return appointmentRepo.findAll();
     }
+
 }

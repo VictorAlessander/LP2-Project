@@ -9,6 +9,7 @@ import com.app.clinicaescola.entity.Patient;
 import com.app.clinicaescola.service.PatientService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +31,11 @@ public class PatientController {
         return this.patient.listPatients();
     }
     
-    @RequestMapping(value = "/patients", method = RequestMethod.POST)
-    public List<Patient> create(@RequestBody Patient newPatient) {
-        return this.patient.createPatient(newPatient);
+    @RequestMapping(value = "/patients/{firstName}", method = RequestMethod.POST)
+    public List<Patient> create(
+            @RequestBody Patient newPatient,
+            @PathVariable("firstName") String employeeFirstName) {
+        
+        return this.patient.createPatient(newPatient, employeeFirstName);
     }
 }
