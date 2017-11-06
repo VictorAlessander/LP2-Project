@@ -1,5 +1,6 @@
 /home/vagr/ClinicaEscola/src/main/java/com/app/clinicaescola/service/OperationService.java
 /home/vagr/ClinicaEscola/src/main/java/com/app/clinicaescola/entity/Employee.java
+/home/vagr/ClinicaEscola/src/main/java/com/app/clinicaescola/config/SwaggerConfig.java
 /home/vagr/ClinicaEscola/src/main/java/com/app/clinicaescola/controller/KindController.java
 /home/vagr/ClinicaEscola/src/main/java/com/app/clinicaescola/controller/PatientController.java
 /home/vagr/ClinicaEscola/src/main/java/com/app/clinicaescola/service/KindService.java
