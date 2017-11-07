@@ -6,7 +6,9 @@
 package com.app.clinicaescola.service;
 
 import com.app.clinicaescola.entity.Appointment;
+import com.app.clinicaescola.entity.Employee;
 import com.app.clinicaescola.repository.AppointmentRepository;
+import com.app.clinicaescola.repository.EmployeeRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +22,35 @@ import org.springframework.stereotype.Service;
 public class AppointmentService {
     
     @Autowired
-    AppointmentRepository appointment;
+    AppointmentRepository appointmentRepo;
     
-    public List<Appointment> listAppointments() {
-        return appointment.findAll();
+    @Autowired
+    EmployeeRepository employeeRepo;
+    
+    public List<Appointment> listAllAppointments() {
+        return appointmentRepo.findAll();
 }
     
-    public List<Appointment> createAppointment(Appointment newAppointment) {
-        appointment.save(newAppointment);
-        
-        return appointment.findAll();
+   public List<Appointment> newAppointment(
+           Appointment appointment,
+           String employeeFirstName) {
+
+       Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+       
+       if("operational".equals(employee.getKind().getName())) {
+           appointmentRepo.save(appointment);
+           return appointmentRepo.findAll();
+       }
+       else{
+           return null;
+       }
+   }
+
+    public List<Appointment> listAppointments(boolean attended) {
+        return appointmentRepo.findByAttended(attended);
+    }
+
+    public void removeAppointment(String id, String employeeFirstName) {
+        this.appointmentRepo.delete(id);
     }
 }
