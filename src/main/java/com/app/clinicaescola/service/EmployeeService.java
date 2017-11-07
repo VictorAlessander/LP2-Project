@@ -20,15 +20,41 @@ import org.springframework.stereotype.Service;
 public class EmployeeService {
     
     @Autowired
-    EmployeeRepository employee;
+    EmployeeRepository employeeRepo;
     
     public List<Employee> listEmployees() {
-        return employee.findAll();
+        return employeeRepo.findAll();
     }
     
-    public List<Employee> createEmployee(Employee newEmployee) {
-        employee.save(newEmployee);
-        
-        return employee.findAll();
+    public List<Employee> createEmployee(
+            Employee newEmployee,
+            String employeeFirstName) {
+
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+
+        if(employee != null && "administrative".equals(
+                employee.getKind().getName())) {
+            employeeRepo.save(newEmployee);
+            return employeeRepo.findAll();
+        }
+        else if("admin".equals(employeeFirstName)) {
+            employeeRepo.save(newEmployee);
+            return employeeRepo.findAll();
+        }
+        else {
+            return null;
+        }
+    }
+    
+    public void deleteEmploye(String id, String employeeFirstName) {
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+
+        if(employee != null && "administrative".equals(
+                employee.getKind().getName())) {
+            employeeRepo.delete(id);
+        }
+        else if("admin".equals(employeeFirstName)) {
+            employeeRepo.delete(id);
+        }
     }
 }

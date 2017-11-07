@@ -9,6 +9,7 @@ import com.app.clinicaescola.entity.Employee;
 import com.app.clinicaescola.service.EmployeeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,9 +31,30 @@ public class EmployeeController {
         return this.employee.listEmployees();
     }
     
-    @RequestMapping(value = "/employees", method = RequestMethod.POST)
-    public List<Employee> create(@RequestBody Employee newEmployee) {
-        return this.employee.createEmployee(newEmployee);
+    @RequestMapping(
+            value = "/employees/{firstName}",
+            method = RequestMethod.POST)
+    public List<Employee> create(
+            @RequestBody Employee newEmployee,
+            @PathVariable("firstName") String firstNameEmployee) {
+
+        return this.employee.createEmployee(newEmployee, firstNameEmployee);
+    }
+    
+    @RequestMapping(value = "/employees/{firstName}/{id}", method = RequestMethod.DELETE)
+    public void delete(
+            @PathVariable("firstName") String employeeFirstName,
+            @PathVariable("id") String employeeId) {
+        this.employee.deleteEmploye(employeeId, employeeFirstName);
     }
 
+    @RequestMapping(
+            value = "/employees/{firstName}",
+            method = RequestMethod.PUT)
+    public List<Employee> update(
+            @RequestBody Employee newEmployee,
+            @PathVariable("firstName") String firstNameEmployee) {
+
+        return this.employee.createEmployee(newEmployee, firstNameEmployee);
+    }
 }
