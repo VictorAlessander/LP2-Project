@@ -38,5 +38,23 @@ public class AppointmentController {
     @RequestMapping(value = "/appointments/{firstName}", method = RequestMethod.POST)
     public List<Appointment> create(
             @RequestBody Appointment newAppointment,
-            @PathVariable("firstName") String employeeFirstName)
+            @PathVariable("firstName") String employeeFirstName) {
+        
+        return this.appointment.newAppointment(newAppointment, employeeFirstName);
+    }
+    
+    @RequestMapping(value = "/appointments/{firstName}", method = RequestMethod.PUT)
+    public List<Appointment> update(
+            @RequestBody Appointment appointment,
+            @PathVariable("firstName") String employeeFirstName) {
+        
+        return this.appointment.newAppointment(appointment, employeeFirstName);
+    }
+    
+    @RequestMapping(value = "/appointments/{id}/{firstName}", method = RequestMethod.DELETE)
+    public void delete(
+            @PathVariable("id") String id,
+            @PathVariable("firstName") String employeeFirstName) {
+        this.appointment.removeAppointment(employeeFirstName, employeeFirstName);
+    }
 }
