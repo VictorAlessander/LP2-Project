@@ -43,4 +43,8 @@ public class PatientService {
         }
     }
     
+    public void removePatient(String id) {
+        patientRepo.delete(id);
+    }
+    
 }

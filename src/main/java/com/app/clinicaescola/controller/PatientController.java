@@ -31,11 +31,28 @@ public class PatientController {
         return this.patient.listPatients();
     }
     
-    @RequestMapping(value = "/patients/{firstName}", method = RequestMethod.POST)
+    @RequestMapping(
+            value = "/patients/{firstName}",
+            method = RequestMethod.POST)
     public List<Patient> create(
             @RequestBody Patient newPatient,
             @PathVariable("firstName") String employeeFirstName) {
         
+        return this.patient.createPatient(newPatient, employeeFirstName);
+    }
+    
+    @RequestMapping(value = "/patients/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") String id) {
+        this.patient.removePatient(id);
+    }
+    
+    @RequestMapping(
+            value = "/patients/{firstName}",
+            method = RequestMethod.PUT)
+    public List<Patient> update(
+            @RequestBody Patient newPatient,
+            @PathVariable("firstName") String employeeFirstName) {
+
         return this.patient.createPatient(newPatient, employeeFirstName);
     }
 }
