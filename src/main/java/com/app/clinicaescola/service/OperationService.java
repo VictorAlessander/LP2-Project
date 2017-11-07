@@ -28,7 +28,9 @@ public class OperationService {
     @Autowired
     AppointmentRepository appointmentRepo;
     
-   public List<Appointment> newAppointment(Appointment appointment, String employeeFirstName) {
+   public List<Appointment> newAppointment(
+           Appointment appointment,
+           String employeeFirstName) {
        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
        
        if("operational".equals(employee.getKind().getName())) {
