@@ -5,6 +5,8 @@
  */
 package com.app.clinicaescola.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
 import javax.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,7 +24,9 @@ public class Appointment {
 
     private String medical_specialty;
     private boolean attended;
-    private String date;
+    
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private Date date;
     
     @DBRef
     private Patient patient;
@@ -35,11 +39,11 @@ public class Appointment {
         this.patient = patient;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
