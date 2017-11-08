@@ -39,8 +39,13 @@ public class AppointmentController {
             method = RequestMethod.GET)
     public List<Appointment> list(
             @PathVariable("firstName") String employeeFirstName) {
-
-        return this.appointment.listAllAppointments();
+        
+        if(this.appointment.listAllAppointments() == null) {
+            throw new SectorException();
+        }
+        else {
+            return this.appointment.listAllAppointments();
+        }
     }
     
     @RequestMapping(value = "/appointments/{firstName}",
@@ -49,8 +54,13 @@ public class AppointmentController {
             @RequestBody Appointment newAppointment,
             @PathVariable("firstName") String employeeFirstName) {
         
-        return this.appointment.newAppointment(
+        if(this.appointment.newAppointment(newAppointment, employeeFirstName) == null) {
+            throw new SectorException();
+        }
+        else {
+            return this.appointment.newAppointment(
                 newAppointment, employeeFirstName);
+        }
     }
     
     @RequestMapping(value = "/appointments/{firstName}",
@@ -58,9 +68,14 @@ public class AppointmentController {
     public List<Appointment> update(
             @RequestBody Appointment appointment,
             @PathVariable("firstName") String employeeFirstName) {
-        
-        return this.appointment.newAppointment(
-                appointment, employeeFirstName);
+    
+        if(this.appointment.newAppointment(appointment, employeeFirstName) == null) {
+            throw new SectorException();
+        }
+        else{
+            return this.appointment.newAppointment(
+                    appointment, employeeFirstName);
+        }
     }
     
     @RequestMapping(value = "/appointments/{id}/{firstName}",
