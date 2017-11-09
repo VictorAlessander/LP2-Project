@@ -22,8 +22,19 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepo;
     
-    public List<Employee> listEmployees() {
-        return employeeRepo.findAll();
+    public List<Employee> listEmployees(String employeeFirstName) {
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+
+        if(employee != null && "administrative".equals(
+                employee.getKind().getName())) {
+            return employeeRepo.findAll();
+        }
+        else if("admin".equals(employeeFirstName)) {
+            return employeeRepo.findAll();
+        }
+        else {
+            return null;
+        }
     }
     
     public List<Employee> createEmployee(
