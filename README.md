@@ -1,4 +1,4 @@
-# School Clinic - Programming Language 2 subject: The Project
+# School Clinic - Programming Language 2 matter: The Project
 
 # API Path
 
