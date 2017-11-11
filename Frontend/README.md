@@ -1,4 +1,4 @@
-# clinic_school
+# School Clinic
 
 > A Vue.js project
 
