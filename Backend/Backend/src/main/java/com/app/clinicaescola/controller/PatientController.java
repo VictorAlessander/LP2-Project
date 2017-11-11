@@ -26,9 +26,9 @@ public class PatientController {
     @Autowired
     PatientService patient;
     
-    @RequestMapping(value = "/patients", method = RequestMethod.GET)
-    public List<Patient> list() {
-        return this.patient.listPatients();
+    @RequestMapping(value = "/patients/{firstName}", method = RequestMethod.GET)
+    public List<Patient> list(@PathVariable("firstName") String employeeFirstName) {
+        return this.patient.listPatients(employeeFirstName);
     }
     
     @RequestMapping(
@@ -41,9 +41,9 @@ public class PatientController {
         return this.patient.createPatient(newPatient, employeeFirstName);
     }
     
-    @RequestMapping(value = "/patients/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") String id) {
-        this.patient.removePatient(id);
+    @RequestMapping(value = "/patients/{firstName}/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("firstName") String employeeFirstName, @PathVariable("id") String id) {
+        this.patient.removePatient(employeeFirstName, id);
     }
     
     @RequestMapping(

@@ -27,8 +27,15 @@ public class PatientService {
     @Autowired
     EmployeeRepository employeeRepo;
     
-    public List<Patient> listPatients() {
-        return patientRepo.findAll();
+    public List<Patient> listPatients(String employeeFirstName) {
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+        
+        if("clinic".equals(employee.getKind().getName())) {
+            return patientRepo.findAll();
+        }
+        else{
+            return null;
+        }
     }
     
     public List<Patient> createPatient(Patient newPatient, String employeeFirstName) {
@@ -43,8 +50,12 @@ public class PatientService {
         }
     }
     
-    public void removePatient(String id) {
-        patientRepo.delete(id);
+    public void removePatient(String employeeFirstName, String id) {
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+        
+        if("clinic".equals(employee.getKind().getName())) {
+            patientRepo.delete(id);
+        }
     }
     
 }

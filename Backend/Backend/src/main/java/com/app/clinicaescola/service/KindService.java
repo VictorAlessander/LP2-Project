@@ -31,4 +31,8 @@ public class KindService {
         
         return type.findAll();
     }
+    
+    public void removeKind(String id) {
+        type.delete(id);
+    }
 }
