@@ -26,9 +26,9 @@ public class EmployeeController {
     @Autowired
     EmployeeService employee;
     
-    @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public List<Employee> list() {
-        return this.employee.listEmployees();
+    @RequestMapping(value = "/employees/{firstName}", method = RequestMethod.GET)
+    public List<Employee> list(@PathVariable("firstName") String employeeFirstName) {
+        return this.employee.listEmployees(employeeFirstName);
     }
     
     @RequestMapping(

@@ -9,6 +9,7 @@ import com.app.clinicaescola.entity.Kind;
 import com.app.clinicaescola.service.KindService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,5 +34,15 @@ public class KindController {
     @RequestMapping(value = "/kinds", method = RequestMethod.POST)
     public List<Kind> create(@RequestBody Kind newKind) {
         return this.kind.createKind(newKind);
+    }
+    
+    @RequestMapping(value = "/kinds", method = RequestMethod.PUT)
+    public List<Kind> update(@RequestBody Kind kind) {
+        return this.kind.createKind(kind);
+    }
+    
+    @RequestMapping(value = "/kinds/{id}", method = RequestMethod.DELETE)
+    public void remove(@PathVariable("id") String kindId) {
+        this.kind.removeKind(kindId);
     }
 }
