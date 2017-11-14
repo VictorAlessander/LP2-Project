@@ -30,7 +30,7 @@ public class PatientService {
     public List<Patient> listPatients(String employeeFirstName) {
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
         
-        if("clinic".equals(employee.getKind().getName())) {
+        if(employee != null && "clinic".equals(employee.getKind().getName())) {
             return patientRepo.findAll();
         }
         else{

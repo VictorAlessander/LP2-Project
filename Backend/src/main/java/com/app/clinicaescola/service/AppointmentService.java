@@ -37,7 +37,7 @@ public class AppointmentService {
 
        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
        
-       if("operational".equals(employee.getKind().getName())) {
+       if(employee != null && "operational".equals(employee.getKind().getName())) {
            appointmentRepo.save(appointment);
            return appointmentRepo.findAll();
        }
