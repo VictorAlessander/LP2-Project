@@ -2,6 +2,7 @@
   <div class="employees">
     <button @click="form_get = !form_get">Form GET</button>
     <button @click="form_post = !form_post">Form POST</button>
+    <button @click="form_delete = !form_delete">Form DELETE</button>
 
     <form action="." v-if="form_get">
       <div class="field">
@@ -13,7 +14,11 @@
       </div>
     </form>
 
-    <form action="." v-if="form_post" style="margin-top: 50px">
+    <form action="." v-if="form_post">
+      <div class="field">
+        <label for="id">ID</label>
+        <input class="input" type="text" id="id" name="id" placeholder="ID (blank if you are creating a new employee)" v-model="employee.id">
+      </div>
       <div class="field">
         <label for="firstName">First Name</label>
         <input class="input" type="text" id="firstName" name="firstName" placeholder="first name" v-model="employee.firstName">
@@ -40,18 +45,47 @@
       </div>
       <div class="field">
         <a class="button is-link" @click="createEmployee()">POST</a>
+        <a class="button is-link" @click="updateEmployee()">PUT</a>
+      </div>
+    </form>
+
+    <form action="." v-if="form_delete">
+      <div class="field">
+        <label for="id">ID</label>
+        <input class="input" type="text" id="id" name="id" placeholder="ID" v-model="employee.id">
+      </div>
+      <div class="field">
+        <label for="employeeRequest">Employee First Name</label>
+        <input class="input" type="text" id="employeeRequest" name="employeeRequest" placeholder="Employee request (first name)" v-model="employeeRequest">
+      </div>
+      <div class="field">
+        <a class="button is-link" @click="removeEmployee()">DELETE</a>
       </div>
     </form>
 
     <div>
-      <ul style="margin-top: 50px">
-        <li v-for="employee in employeesData">
-          <p>First Name: {{employee.firstName}}</p>
-          <p>Last Name: {{employee.lastName}}</p>
-          <p>Age: {{employee.age}}</p>
-          <p>Kind: {{employee.kind.name}}</p>
-        </li>
-      </ul>
+      <table class="table is-fullwidth" style="margin-top: 50px">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Kind ID</th>
+            <th>Kind Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="employee in employeesData">
+            <td>{{employee.id}}</td>
+            <td>{{employee.firstName}}</td>
+            <td>{{employee.lastName}}</td>
+            <td>{{employee.age}}</td>
+            <td>{{employee.kind.id}}</td>
+            <td>{{employee.kind.name}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -67,6 +101,7 @@
         employeesData: {},
         employeeRequest: '',
         employee: {
+          id: null,
           firstName: '',
           lastName: '',
           age: '',
@@ -77,22 +112,50 @@
         },
 
         form_get: false,
-        form_post: false
+        form_post: false,
+        form_delete: false
       }
     },
 
     methods: {
+      clearInputs () {
+        this.employee.id = null
+        this.employee.firstName = ''
+        this.employee.lastName = ''
+        this.employee.age = ''
+        this.employee.kind.id = ''
+        this.employee.kind.name = ''
+      },
+
       getEmployees () {
-        axios.get('http://localhost:8080/employees/' + this.employeeRequest)
+        axios.get(`http://localhost:8080/employees/${this.employeeRequest}`)
         .then(response => {
           this.employeesData = response.data
         })
       },
 
       createEmployee () {
-        axios.post('http://localhost:8080/employees/' + this.employeeRequest, this.employee)
-        .then(response => { console.log(response) })
-        .catch(e => { console.log('Errors:' + e) })
+        axios.post(`http://localhost:8080/employees/${this.employeeRequest}`, this.employee)
+        .then(response => {
+          console.log(response)
+          this.clearInputs()
+        })
+        .catch(e => { alert(e) })
+      },
+
+      updateEmployee () {
+        axios.put(`http://localhost:8080/employees/${this.employeeRequest}`, this.employee)
+        .then(response => {
+          console.log(response)
+          this.clearInputs()
+        })
+        .catch(e => { alert(e) })
+      },
+
+      removeEmployee () {
+        axios.delete(`http://localhost:8080/employees/${this.employeeRequest}/${this.employee.id}`)
+        .then(this.clearInputs())
+        .catch(e => { alert(e) })
       }
     }
   }
@@ -119,7 +182,7 @@ a {
 }
 
 form {
-  width: 300px;
+  width: 400px;
   margin: 0 auto;
   margin-top: 50px;
 }
