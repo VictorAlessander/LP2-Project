@@ -122,7 +122,7 @@
         this.employee.id = null
         this.employee.firstName = ''
         this.employee.lastName = ''
-        this.employee.age = ''
+        this.employee.age = null
         this.employee.kind.id = ''
         this.employee.kind.name = ''
       },
