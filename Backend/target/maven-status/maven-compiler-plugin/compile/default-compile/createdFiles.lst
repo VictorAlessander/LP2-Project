@@ -1,6 +1,7 @@
 com/app/clinicaescola/service/KindService.class
 com/app/clinicaescola/controller/KindController.class
 com/app/clinicaescola/service/PatientService.class
+com/app/clinicaescola/controller/SectorException.class
 com/app/clinicaescola/entity/Employee.class
 com/app/clinicaescola/controller/AppointmentController.class
 com/app/clinicaescola/controller/PatientController.class
