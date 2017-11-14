@@ -46,7 +46,7 @@ public class AppointmentService {
        }
    }
 
-    public List<Appointment> listAppointments(boolean attended) {
+    public List<Appointment> listAppointmentsAttended(boolean attended) {
         return appointmentRepo.findByAttended(attended);
     }
 

@@ -88,6 +88,14 @@ public class AppointmentController {
                 employeeFirstName, employeeFirstName);
     }
     
+    @RequestMapping(value = "/appointments/filter/{attended}/{firstName}", method = RequestMethod.GET)
+    public List<Appointment> listAppointmentsbyAttended(
+            @PathVariable("attended") boolean flag,
+            @PathVariable("firstName") String employeeFirstName) {
+        
+        return this.appointment.listAppointmentsAttended(flag);
+    }
+    
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public void handleBadRequest(
             HttpServletResponse response) throws IOException {
