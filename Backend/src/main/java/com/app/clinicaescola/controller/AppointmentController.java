@@ -85,7 +85,7 @@ public class AppointmentController {
             @PathVariable("firstName") String employeeFirstName) {
 
         this.appointment.removeAppointment(
-                employeeFirstName, employeeFirstName);
+                id, employeeFirstName);
     }
     
     @RequestMapping(value = "/appointments/filter/{attended}/{firstName}", method = RequestMethod.GET)

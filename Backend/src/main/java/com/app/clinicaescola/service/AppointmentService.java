@@ -41,7 +41,7 @@ public class AppointmentService {
            appointmentRepo.save(appointment);
            return appointmentRepo.findAll();
        }
-       else{
+       else {
            return null;
        }
    }
@@ -51,6 +51,11 @@ public class AppointmentService {
     }
 
     public void removeAppointment(String id, String employeeFirstName) {
-        this.appointmentRepo.delete(id);
+
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+
+        if(employee != null && "operational".equals(employee.getKind().getName())) {
+            this.appointmentRepo.delete(id);
+        }
     }
 }
