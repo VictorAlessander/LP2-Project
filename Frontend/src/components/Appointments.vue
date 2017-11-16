@@ -17,49 +17,61 @@
     <form action="." v-if="form_post">
       <div class="field">
         <label for="id">ID</label>
-        <input class="input" type="text" id="id" name="id" placeholder="ID (blank if you are creating a new employee)" v-model="employee.id">
+        <input class="input" type="text" id="id" name="id" placeholder="ID" v-model="appointment.id">
       </div>
       <div class="field">
-        <label for="firstName">First Name</label>
-        <input class="input" type="text" id="firstName" name="firstName" placeholder="first name" v-model="employee.firstName">
+        <label for="medical_specialty">Medical Specialty</label>
+        <input class="input" type="text" id="medical_specialty" name="medical_specialty" placeholder="medical specialty" v-model="appointment.medical_specialty">
       </div>
       <div class="field">
-        <label for="lastName">Last Name</label>
-        <input class="input" type="text" id="lastName" name="lastName" placeholder="last name" v-model="employee.lastName">
+        <div class="control">
+          <label for="attended-checkbox">
+            <input type="checkbox" id="attended-checkbox" name="attended-checkbox" v-model="appointment.attended">
+            Attended
+          </label>
+        </div>
       </div>
       <div class="field">
-        <label for="age">Age</label>
-        <input class="input" type="text" id="age" name="age" placeholder="age" v-model="employee.age">
+        <label for="date">Date</label>
+        <input class="input" type="text" id="date" name="date" placeholder="Date" v-model="appointment.date">
       </div>
       <div class="field">
-        <label for="kind_id">Kind id</label>
-        <input class="input" type="text" id="kind_id" name="kind_id" placeholder="kind id" v-model="employee.kind.id">
+        <label for="patient_id">Patient's ID</label>
+        <input class="input" type="text" id="patient_id" name="patient_id" placeholder="ID" v-model="appointment.patient.id">
       </div>
       <div class="field">
-        <label for="kind_name">Kind name</label>
-        <input class="input" type="text" id="kind_name" name="kind_name" placeholder="kind name" v-model="employee.kind.name">
+        <label for="firstName">Patient's First Name</label>
+        <input class="input" type="text" id="firstName" name="firstName" placeholder="first name" v-model="appointment.patient.firstName">
       </div>
       <div class="field">
-        <label for="employeeRequest">Employee First Name</label>
+        <label for="lastName">Patient's Last Name</label>
+        <input class="input" type="text" id="lastName" name="lastName" placeholder="last name" v-model="appointment.patient.lastName">
+      </div>
+      <div class="field">
+        <label for="age">Patient's Age</label>
+        <input class="input" type="text" id="age" name="age" placeholder="age" v-model="appointment.patient.age">
+      </div>
+      <div class="field">
+        <label for="employeeRequest">Employee's First Name</label>
         <input class="input" type="text" id="employeeRequest" name="employeeRequest" placeholder="Employee request (first name)" v-model="employeeRequest">
       </div>
       <div class="field">
-        <a class="button is-link" @click="createEmployee()">POST</a>
-        <a class="button is-link" @click="updateEmployee()">PUT</a>
+        <a class="button is-link" @click="createAppointment()">POST</a>
+        <a class="button is-link" @click="updateAppointment()">PUT</a>
       </div>
     </form>
 
     <form action="." v-if="form_delete">
       <div class="field">
         <label for="id">ID</label>
-        <input class="input" type="text" id="id" name="id" placeholder="ID" v-model="employee.id">
+        <input class="input" type="text" id="id" name="id" placeholder="ID" v-model="appointment.id">
       </div>
       <div class="field">
         <label for="employeeRequest">Employee First Name</label>
         <input class="input" type="text" id="employeeRequest" name="employeeRequest" placeholder="Employee request (first name)" v-model="employeeRequest">
       </div>
       <div class="field">
-        <a class="button is-link" @click="removeEmployee()">DELETE</a>
+        <a class="button is-link" @click="removeAppointment()">DELETE</a>
       </div>
     </form>
 
@@ -68,21 +80,23 @@
         <thead>
           <tr>
             <th>ID</th>
+            <th>Specialty</th>
+            <th>Attended</th>
+            <th>Date</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Age</th>
-            <th>Kind ID</th>
-            <th>Kind Name</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="employee in employeesData">
-            <td>{{employee.id}}</td>
-            <td>{{employee.firstName}}</td>
-            <td>{{employee.lastName}}</td>
-            <td>{{employee.age}}</td>
-            <td>{{employee.kind.id}}</td>
-            <td>{{employee.kind.name}}</td>
+          <tr v-for="appointment in appointmentsData">
+            <td>{{appointment.id}}</td>
+            <td>{{appointment.medical_specialty}}</td>
+            <td>{{appointment.attended}}</td>
+            <td>{{appointment.date}}</td>
+            <td>{{appointment.patient.firstName}}</td>
+            <td>{{appointment.patient.lastName}}</td>
+            <td>{{appointment.patient.age}}</td>
           </tr>
         </tbody>
       </table>
@@ -92,6 +106,8 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: 'Appointments',
 
@@ -102,7 +118,7 @@
         appointment: {
           id: null,
           medical_specialty: '',
-          attended: null,
+          attended: false,
           date: null,
           patient: {
             id: '',
@@ -122,13 +138,69 @@
       clearInputs () {
         this.appointment.id = null
         this.appointment.medical_specialty = ''
-        this.appointment.attended = null
+        this.appointment.attended = false
         this.appointment.date = null
         this.appointment.patient.id = null
         this.patient.firstName = ''
         this.patient.lastName = ''
         this.patient.age = null
+      },
+
+      getAppointments () {
+        axios.get(`http://localhost:8080/appointments/${this.employeeRequest}`)
+        .then(response => { this.appointmentsData = response.data })
+      },
+
+      createAppointment () {
+        axios.post(`http://localhost:8080/appointments/${this.employeeRequest}`, this.appointment)
+        .then(response => {
+          console.log(response)
+          this.clearInputs()
+        })
+        .catch(e => { alert(e) })
+      },
+
+      updateAppointment () {
+        axios.put(`http://localhost:8080/appointments/${this.employeeRequest}`, this.appointment)
+        .then(response => {
+          console.log(response)
+          this.clearInputs()
+        })
+        .catch(e => { alert(e) })
+      },
+
+      removeAppointment () {
+        axios.delete(`http://localhost:8080/appointments/${this.appointment.id}/${this.employeeRequest}`)
+        .then(response => { console.log(response) })
+        .catch(e => { alert(e) })
       }
     }
   }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1, h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+
+form {
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+</style>
