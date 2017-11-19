@@ -6,11 +6,20 @@
 
     <form action="." v-if="form_get">
       <div class="field">
-        <label for="firstName">First Name</label>
+        <label for="firstName">Employee First Name</label>
         <input class="input" type="text" id="firstName" name="firstName" placeholder="Employee first name" v-model="employeeRequest">
       </div>
       <div class="field">
-        <a class="button is-link" @click="getAppointments()">GET</a>
+        <div class="control">
+          <label for="attended-filter_checkbox">
+            <input type="checkbox" id="attended-filter_checkbox" name="attended-filter_checkbox" v-model="filter_by_attended">
+            Filtrating by {{this.filter_by_attended}} records
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <a class="button is-link" @click="getAppointments()">All</a>
+        <a class="button is-link" @click="getAttendedAppointments()">Filtrate</a>
       </div>
     </form>
 
@@ -128,6 +137,8 @@
           }
         },
 
+        filter_by_attended: false,
+
         form_get: false,
         form_post: false,
         form_delete: false
@@ -149,6 +160,13 @@
       getAppointments () {
         axios.get(`http://localhost:8080/appointments/${this.employeeRequest}`)
         .then(response => { this.appointmentsData = response.data })
+        .catch(e => { alert(e) })
+      },
+
+      getAttendedAppointments () {
+        axios.get(`http://localhost:8080/appointments/filter/${this.filter_by_attended}/${this.employeeRequest}`)
+        .then(response => { this.appointmentsData = response.data })
+        .catch(e => { alert(e) })
       },
 
       createAppointment () {
