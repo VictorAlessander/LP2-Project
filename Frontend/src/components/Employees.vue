@@ -32,6 +32,14 @@
         <input class="input" type="text" id="age" name="age" placeholder="age" v-model="employee.age">
       </div>
       <div class="field">
+        <div class="control">
+          <label for="responsable-checkbox">
+            <input type="checkbox" id="responsable-checkbox" name="responsable-checkbox" v-model="employee.responsable">
+            Responsable
+          </label>
+        </div>
+      </div>
+      <div class="field">
         <label for="kind_id">Kind id</label>
         <input class="input" type="text" id="kind_id" name="kind_id" placeholder="kind id" v-model="employee.kind.id">
       </div>
@@ -64,13 +72,14 @@
     </form>
 
     <div>
-      <table class="table is-fullwidth" style="margin-top: 50px">
+      <table class="table is-fullwidth is-hoverable" style="margin-top: 50px">
         <thead>
           <tr>
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Age</th>
+            <th>Responsable</th>
             <th>Kind ID</th>
             <th>Kind Name</th>
           </tr>
@@ -81,6 +90,7 @@
             <td>{{employee.firstName}}</td>
             <td>{{employee.lastName}}</td>
             <td>{{employee.age}}</td>
+            <td>{{employee.responsable}}</td>
             <td>{{employee.kind.id}}</td>
             <td>{{employee.kind.name}}</td>
           </tr>
@@ -105,6 +115,7 @@
           firstName: '',
           lastName: '',
           age: '',
+          responsable: false,
           kind: {
             id: '',
             name: ''
@@ -123,6 +134,7 @@
         this.employee.firstName = ''
         this.employee.lastName = ''
         this.employee.age = null
+        this.employee.responsable = false
         this.employee.kind.id = ''
         this.employee.kind.name = ''
       },
@@ -132,6 +144,7 @@
         .then(response => {
           this.employeesData = response.data
         })
+        .catch(e => { alert(e) })
       },
 
       createEmployee () {

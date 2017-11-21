@@ -17,6 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Employee extends Person {
     
+    private boolean responsable;
+    
     @DBRef
     private Kind kind;
 
@@ -26,6 +28,14 @@ public class Employee extends Person {
 
     public void setKind(Kind kind) {
         this.kind = kind;
+    }
+
+    public boolean isResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(boolean responsable) {
+        this.responsable = responsable;
     }
     
 }
