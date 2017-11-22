@@ -12,6 +12,4 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  *
  * @author vagr
  */
-public interface PatientRepository extends MongoRepository<Patient, String> {
-    public Patient findByFirstName(String firstName);
-}
+public interface PatientRepository extends MongoRepository<Patient, String>{}
