@@ -6,6 +6,7 @@
 package com.app.clinicaescola.repository;
 
 import com.app.clinicaescola.entity.Appointment;
+import com.app.clinicaescola.entity.Patient;
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -13,7 +14,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  *
  * @author vagr
  */
-public interface AppointmentRepository extends MongoRepository<Appointment, String>{
+public interface AppointmentRepository extends MongoRepository<Appointment, String> {
     
     public List<Appointment> findByAttended(boolean attended);
+    public List<Appointment> findByPatient(Patient patient);
 }
