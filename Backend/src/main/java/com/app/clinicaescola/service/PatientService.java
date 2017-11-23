@@ -41,7 +41,7 @@ public class PatientService {
     public List<Patient> createPatient(Patient newPatient, String employeeFirstName) {
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
         
-        if("clinic".equals(employee.getKind().getName())) {
+        if(employee != null && "clinic".equals(employee.getKind().getName())) {
             patientRepo.save(newPatient);
             return patientRepo.findAll();
         }
@@ -53,7 +53,7 @@ public class PatientService {
     public void removePatient(String employeeFirstName, String id) {
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
         
-        if("clinic".equals(employee.getKind().getName())) {
+        if(employee != null && "clinic".equals(employee.getKind().getName())) {
             patientRepo.delete(id);
         }
     }

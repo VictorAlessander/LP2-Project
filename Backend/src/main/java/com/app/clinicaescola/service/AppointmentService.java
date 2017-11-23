@@ -27,9 +27,18 @@ public class AppointmentService {
     @Autowired
     EmployeeRepository employeeRepo;
     
-    public List<Appointment> listAllAppointments() {
-        return appointmentRepo.findAll();
-}
+    public List<Appointment> listAllAppointments(String employeeFirstName) {
+
+        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
+       
+       if(employee != null && "operational".equals(
+               employee.getKind().getName())) {
+           return appointmentRepo.findAll();
+       }
+       else {
+           return null;
+       }
+    }
     
    public List<Appointment> newAppointment(
            Appointment appointment,
@@ -37,7 +46,8 @@ public class AppointmentService {
 
        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
        
-       if(employee != null && "operational".equals(employee.getKind().getName())) {
+       if(employee != null && "operational".equals(
+               employee.getKind().getName())) {
            appointmentRepo.save(appointment);
            return appointmentRepo.findAll();
        }
@@ -54,7 +64,8 @@ public class AppointmentService {
 
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
 
-        if(employee != null && "operational".equals(employee.getKind().getName())) {
+        if(employee != null && "operational".equals(
+                employee.getKind().getName())) {
             this.appointmentRepo.delete(id);
         }
     }

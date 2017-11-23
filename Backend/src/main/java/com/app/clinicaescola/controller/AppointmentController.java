@@ -40,11 +40,11 @@ public class AppointmentController {
     public List<Appointment> list(
             @PathVariable("firstName") String employeeFirstName) {
         
-        if(this.appointment.listAllAppointments() == null) {
+        if(this.appointment.listAllAppointments(employeeFirstName) == null) {
             throw new SectorException();
         }
         else {
-            return this.appointment.listAllAppointments();
+            return this.appointment.listAllAppointments(employeeFirstName);
         }
     }
     
