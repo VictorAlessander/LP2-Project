@@ -33,7 +33,11 @@ public class ReportController {
             @PathVariable("patientFirstName") String patientFirstName,
             @PathVariable("employeeFirstName") String employeeFirstName) {
         
-        return this.patientReports.showReport(
-                patientFirstName, employeeFirstName);
+        if (this.patientReports.showReport(patientFirstName, employeeFirstName) == null){
+         throw new SectorException();   
+        }
+        else{
+            return this.patientReports.showReport(patientFirstName, employeeFirstName);
+        }
     }
 }

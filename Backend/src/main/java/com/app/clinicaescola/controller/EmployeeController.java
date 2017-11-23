@@ -28,7 +28,12 @@ public class EmployeeController {
     
     @RequestMapping(value = "/employees/{firstName}", method = RequestMethod.GET)
     public List<Employee> list(@PathVariable("firstName") String employeeFirstName) {
+        if (this.employee.listEmployees(employeeFirstName) == null){
+            throw new SectorException();
+        }
+        else{
         return this.employee.listEmployees(employeeFirstName);
+        }
     }
     
     @RequestMapping(
