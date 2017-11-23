@@ -6,6 +6,8 @@
 package com.app.clinicaescola.controller;
 
 import com.app.clinicaescola.entity.Appointment;
+import com.app.clinicaescola.entity.Employee;
+import com.app.clinicaescola.service.EmployeeReportService;
 import com.app.clinicaescola.service.PatientReportService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class ReportController {
     @Autowired
     PatientReportService patientReports;
     
+    @Autowired
+    EmployeeReportService employeeReports;
     
     @RequestMapping(
             value = "/reports/{patientFirstName}/{employeeFirstName}",
@@ -33,11 +37,24 @@ public class ReportController {
             @PathVariable("patientFirstName") String patientFirstName,
             @PathVariable("employeeFirstName") String employeeFirstName) {
         
-        if (this.patientReports.showReport(patientFirstName, employeeFirstName) == null){
-         throw new SectorException();   
+        if(this.patientReports.showReport(
+                patientFirstName, employeeFirstName) == null) {
+            throw new SectorException();
         }
-        else{
-            return this.patientReports.showReport(patientFirstName, employeeFirstName);
+        else {
+            return this.patientReports.showReport(
+                patientFirstName, employeeFirstName);
         }
+    }
+
+    @RequestMapping(
+            value = "/reports/{employeeFirstName}/{employeeRequest}",
+            method = RequestMethod.GET)
+    public Employee getEmployeeReport(
+            @PathVariable("employeeFirstName") String employeeFirstName,
+            @PathVariable("employeeRequest") String employeeRequest) {
+
+        return this.employeeReports.showReport(
+                employeeRequest, employeeFirstName);
     }
 }
