@@ -2,4 +2,4 @@
 
 # API Path
 
-![alt text](https://i.imgur.com/Yw8oXoZ.jpg)
+![alt text](https://i.imgur.com/7XeON3L.jpg)
