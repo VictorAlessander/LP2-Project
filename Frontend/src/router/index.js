@@ -5,6 +5,7 @@ import Patients from '@/components/Patients'
 import Employees from '@/components/Employees'
 import Appointments from '@/components/Appointments'
 import Kinds from '@/components/Kinds'
+import Reports from '@/components/Reports'
 
 Vue.use(Router)
 
@@ -38,6 +39,12 @@ export default new Router({
       path: '/kinds',
       name: 'Kinds',
       component: Kinds
+    },
+
+    {
+      path: '/reports',
+      name: 'Reports',
+      component: Reports
     }
   ]
 })

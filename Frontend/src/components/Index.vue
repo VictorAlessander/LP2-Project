@@ -4,6 +4,7 @@
     <router-link :to="{ name: 'Employees' }">Employees</router-link>
     <router-link :to="{ name: 'Appointments' }">Appointments</router-link>
     <router-link :to="{ name: 'Kinds' }">Kinds</router-link>
+    <router-link :to="{ name: 'Reports' }">Reports</router-link>
   </div>
 </template>
 
