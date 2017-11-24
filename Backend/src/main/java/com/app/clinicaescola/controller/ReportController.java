@@ -31,7 +31,7 @@ public class ReportController {
     EmployeeReportService employeeReports;
     
     @RequestMapping(
-            value = "/reports/{patientFirstName}/{employeeFirstName}",
+            value = "/reports/patient/{patientFirstName}/{employeeFirstName}",
             method = RequestMethod.GET)
     public List<Appointment> getPatientReport(
             @PathVariable("patientFirstName") String patientFirstName,
@@ -48,7 +48,7 @@ public class ReportController {
     }
 
     @RequestMapping(
-            value = "/reports/{employeeFirstName}/{employeeRequest}",
+            value = "/reports/employee/{employeeFirstName}/{employeeRequest}",
             method = RequestMethod.GET)
     public Employee getEmployeeReport(
             @PathVariable("employeeFirstName") String employeeFirstName,
