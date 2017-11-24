@@ -6,8 +6,8 @@
 
     <form action="." v-if="form_get">
       <div class="field">
-        <label for="firstName">First Name</label>
-        <input class="input" type="text" id="firstName" name="firstName" placeholder="Employee first name" v-model="employeeRequest">
+        <label for="employeeFirstName">Employee First Name</label>
+        <input class="input" type="text" id="employeeFirstName" name="employeeFirstName" placeholder="Employee first name" v-model="employeeRequest">
       </div>
       <div class="field">
         <a class="button is-link" @click="getPatients()">GET</a>
