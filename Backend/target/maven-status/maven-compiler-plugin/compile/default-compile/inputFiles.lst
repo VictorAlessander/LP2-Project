@@ -6,6 +6,7 @@
 /home/vagr/SchoolClinic/Backend/src/main/java/com/app/clinicaescola/service/AppointmentService.java
 /home/vagr/SchoolClinic/Backend/src/main/java/com/app/clinicaescola/controller/PatientController.java
 /home/vagr/SchoolClinic/Backend/src/main/java/com/app/clinicaescola/entity/Kind.java
+/home/vagr/SchoolClinic/Backend/src/main/java/com/app/clinicaescola/service/EmployeeReportService.java
 /home/vagr/SchoolClinic/Backend/src/main/java/com/app/clinicaescola/repository/AppointmentRepository.java
 /home/vagr/SchoolClinic/Backend/src/main/java/com/app/clinicaescola/config/SwaggerConfig.java
 /home/vagr/SchoolClinic/Backend/src/main/java/com/app/clinicaescola/controller/SectorException.java
