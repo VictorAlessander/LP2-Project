@@ -17,6 +17,6 @@ Node Package Manager (npm)
 
 1. Run the mongod service (mongodb)
 
-2. Start spring boot server
+2. Start spring boot server using an IDLE or inside the folder 'Backend' in cli.
 
-3. Start npm server
+3. Start npm server for vue.JS inside the folder 'Frontend'.
