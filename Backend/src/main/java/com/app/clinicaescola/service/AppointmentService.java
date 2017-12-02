@@ -7,8 +7,10 @@ package com.app.clinicaescola.service;
 
 import com.app.clinicaescola.entity.Appointment;
 import com.app.clinicaescola.entity.Employee;
+import com.app.clinicaescola.enums.SectorEnum;
 import com.app.clinicaescola.repository.AppointmentRepository;
 import com.app.clinicaescola.repository.EmployeeRepository;
+import com.app.clinicaescola.validations.SectorValidation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,13 +33,14 @@ public class AppointmentService {
 
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
        
-       if(employee != null && "operational".equals(
-               employee.getKind().getName())) {
-           return appointmentRepo.findAll();
-       }
-       else {
-           return null;
-       }
+        String sectorEmployee = employee.getKind().getName();
+        
+        if(SectorValidation.belongsToSector(
+                SectorEnum.OPERATIONAL, sectorEmployee)) {
+            return appointmentRepo.findAll();
+        }
+        
+        return null;
     }
     
    public List<Appointment> newAppointment(
@@ -46,14 +49,15 @@ public class AppointmentService {
 
        Employee employee = employeeRepo.findByFirstName(employeeFirstName);
        
-       if(employee != null && "operational".equals(
-               employee.getKind().getName())) {
-           appointmentRepo.save(appointment);
-           return appointmentRepo.findAll();
-       }
-       else {
-           return null;
-       }
+        String sectorEmployee = employee.getKind().getName();
+        
+        if(SectorValidation.belongsToSector(
+                SectorEnum.OPERATIONAL, sectorEmployee)) {
+            appointmentRepo.save(appointment);
+            return appointmentRepo.findAll();
+        }
+        
+        return null;
    }
 
     public List<Appointment> listAppointmentsAttended(boolean attended) {
@@ -64,8 +68,10 @@ public class AppointmentService {
 
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
 
-        if(employee != null && "operational".equals(
-                employee.getKind().getName())) {
+        String sectorEmployee = employee.getKind().getName();
+        
+        if(SectorValidation.belongsToSector(
+                SectorEnum.OPERATIONAL, sectorEmployee)) {
             this.appointmentRepo.delete(id);
         }
     }

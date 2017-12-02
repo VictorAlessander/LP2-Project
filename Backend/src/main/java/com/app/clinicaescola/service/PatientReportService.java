@@ -8,9 +8,11 @@ package com.app.clinicaescola.service;
 import com.app.clinicaescola.entity.Appointment;
 import com.app.clinicaescola.entity.Employee;
 import com.app.clinicaescola.entity.Patient;
+import com.app.clinicaescola.enums.SectorEnum;
 import com.app.clinicaescola.repository.AppointmentRepository;
 import com.app.clinicaescola.repository.EmployeeRepository;
 import com.app.clinicaescola.repository.PatientRepository;
+import com.app.clinicaescola.validations.SectorValidation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,12 +40,13 @@ public class PatientReportService {
         
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
         
-        if(employee != null && "administrative".equals(
-                employee.getKind().getName())) {
+        String sectorEmployee = employee.getKind().getName();
+        
+        if(SectorValidation.belongsToSector(
+                SectorEnum.ADMINISTRATIVE, sectorEmployee)) {
             return appointmentRepo.findByPatient(patient);
         }
-        else {
-            return null;
-        }
+        
+        return null;
     }
 }

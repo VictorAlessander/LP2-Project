@@ -6,7 +6,9 @@
 package com.app.clinicaescola.service;
 
 import com.app.clinicaescola.entity.Employee;
+import com.app.clinicaescola.enums.SectorEnum;
 import com.app.clinicaescola.repository.EmployeeRepository;
+import com.app.clinicaescola.validations.SectorValidation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,16 +27,14 @@ public class EmployeeService {
     public List<Employee> listEmployees(String employeeFirstName) {
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
 
-        if(employee != null && "administrative".equals(
-                employee.getKind().getName())) {
+        String sectorEmployee = employee.getKind().getName();
+        
+        if(SectorValidation.belongsToSector(
+                SectorEnum.ADMINISTRATIVE, sectorEmployee)) {
             return employeeRepo.findAll();
         }
-        else if("admin".equals(employeeFirstName)) {
-            return employeeRepo.findAll();
-        }
-        else {
-            return null;
-        }
+        
+        return null;
     }
     
     public List<Employee> createEmployee(
@@ -43,28 +43,24 @@ public class EmployeeService {
 
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
 
-        if(employee != null && "administrative".equals(
-                employee.getKind().getName())) {
+        String sectorEmployee = employee.getKind().getName();
+        
+        if(SectorValidation.belongsToSector(
+                SectorEnum.ADMINISTRATIVE, sectorEmployee)) {
             employeeRepo.save(newEmployee);
             return employeeRepo.findAll();
         }
-        else if("admin".equals(employeeFirstName)) {
-            employeeRepo.save(newEmployee);
-            return employeeRepo.findAll();
-        }
-        else {
-            return null;
-        }
+        
+        return null;
     }
     
     public void deleteEmploye(String id, String employeeFirstName) {
         Employee employee = employeeRepo.findByFirstName(employeeFirstName);
 
-        if(employee != null && "administrative".equals(
-                employee.getKind().getName())) {
-            employeeRepo.delete(id);
-        }
-        else if("admin".equals(employeeFirstName)) {
+        String sectorEmployee = employee.getKind().getName();
+        
+        if(SectorValidation.belongsToSector(
+                SectorEnum.ADMINISTRATIVE, sectorEmployee)) {
             employeeRepo.delete(id);
         }
     }
