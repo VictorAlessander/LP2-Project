@@ -9,6 +9,8 @@ import com.app.clinicaescola.entity.Employee;
 import com.app.clinicaescola.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.app.clinicaescola.enums.SectorEnum;
+import com.app.clinicaescola.validations.SectorValidation;
 
 /**
  *
@@ -25,8 +27,10 @@ public class EmployeeReportService {
             String employeeRequest, String employeeFirstName) {
         
         Employee employee = employeeRepo.findByFirstName(employeeRequest);
-        
-        if(employee != null && "administrative".equals(employee.getKind().getName())) {
+
+        String sectorEmployee = employee.getKind().getName();
+
+        if (SectorValidation.belongsToSector(SectorEnum.ADMINISTRATIVE, sectorEmployee)) {
             return employeeRepo.findByFirstName(employeeFirstName);
         }
         else {
